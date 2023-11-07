@@ -6,7 +6,7 @@ from apiflask import HTTPError
 from redis import Redis
 
 
-class RedisRepository:
+class TaskRepository:
     def __init__(self, r):
         self.r: Redis = r
 
