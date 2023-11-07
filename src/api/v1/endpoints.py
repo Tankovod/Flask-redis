@@ -64,6 +64,11 @@ def change_task(task_id: int, json_data) -> Response:
 @app.route("/api/v1/memory-alarm", methods=["POST"])
 @app.input(MemoryModel)
 def check_memory(json_data):
+    """
+    Alarm if memory size is high
+    :param json_data: memory data
+    :return: response with status 200 OK
+    """
     print(f"ALARM ! Used memory is: {json_data.get('used_memory')}. Alarm memory level is "
           f"{json_data.get('alarm_memory_value')}")
     return Response(
