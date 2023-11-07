@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+   redis:
+        image: redis:7.0.4-alpine
+        container_name: redis-db
+        hostname: redis
+        ports:
+          - '6379:6379'
+
+   flask:
+        command: sh -c "python app.py --port & python memory_check.py"
+        build: .
+        container_name: flask
+        ports:
+            - "8080:8080"
+        volumes:
+            - .:/app
+        depends_on:
+            - redis
+        restart: always
