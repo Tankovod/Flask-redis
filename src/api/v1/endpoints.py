@@ -4,7 +4,7 @@ from apiflask import HTTPError
 from apiflask.app import Response
 
 from src.database.repositories import TaskRepository
-from src.settings import app, redis
+from src.settings import app
 from src.validation.models import TaskModel, MemoryModel
 
 
@@ -17,7 +17,7 @@ def new_task(json_data) -> Response:
     :return: new task id or raise Integrity error
     """
     return app.response_class(
-        response=TaskRepository(redis).insert(prefix="task", params=json_data),
+        response=TaskRepository().insert(params=json_data),
         status=201,
         mimetype="application/json"
     )
@@ -29,7 +29,7 @@ def get_all_tasks() -> List[Dict]:
     Get all tasks from database
     :return: list of tasks from db
     """
-    return TaskRepository(redis).get_all(prefix="task")
+    return TaskRepository().get_all()
 
 
 @app.route("/api/v1/get-task/<int:task_id>", methods=["GET"])
@@ -39,7 +39,7 @@ def get_task(task_id: int) -> Dict:
     :param task_id: id of task
     :return: task data from db or raise Not found error
     """
-    task = TaskRepository(redis).get(prefix="task", id_=task_id)
+    task = TaskRepository().get(id_=task_id)
     if not task:
         raise HTTPError(status_code=404, message="Not found", detail="Task was not found")
     return task
@@ -55,7 +55,7 @@ def change_task(task_id: int, json_data) -> Response:
     :return: id of the task was changed or raise Not found error
     """
     return Response(
-        response=TaskRepository(redis).put(prefix="task", task_id=task_id, params=json_data),
+        response=TaskRepository().put(task_id=task_id, params=json_data),
         status=200,
         mimetype="application/json"
     )
