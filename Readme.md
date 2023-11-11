@@ -7,4 +7,5 @@ and APIFlask API for recieving requests
 
 - install required libraries
 - ```bash
-  docker compose up```
+  docker compose up
+  ```
