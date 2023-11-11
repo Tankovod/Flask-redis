@@ -1,7 +1,6 @@
 # Flask-redis
 
-This is the project with redis database
-and APIFlask API for recieving requests
+This is a project with a Redis database, and an api implemented using the apiflask framework
 
 ## Instalation
 
